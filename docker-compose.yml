@@ -1,0 +1,30 @@
+version: "3.4"
+
+services:
+  goaccess:
+    container_name: goaccess
+    build: .
+    volumes:
+      - ${PWD}/log/nginx:/var/log/nginx
+      - ${PWD}/config/goaccess:/srv/data
+      - goaccess_report:/srv/report
+    expose:
+      - 7890
+
+  goaccess-nginx:
+    container_name: goaccess-nginx
+    image: nginx:stable
+    volumes:
+      - ${PWD}/log/nginx:/var/log/nginx
+      - ${PWD}/config/nginx/conf.d:/etc/nginx/conf.d
+      - ${PWD}/config/nginx/access.conf:/etc/nginx/access.conf
+      - goaccess_report:/srv/report
+    ports:
+      - 8080:80     # app port
+      - 37890:37890 # goaccess port
+    depends_on:
+      - goaccess
+
+volumes:
+  goaccess_report:
+    name: goaccess_report
