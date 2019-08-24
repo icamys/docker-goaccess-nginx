@@ -1,5 +1,7 @@
+ARG ALPINE_VERSION=3.10.2
+
 # Builds a goaccess image from the current working directory:
-FROM alpine:edge
+FROM alpine:${ALPINE_VERSION}
 
 ARG build_deps="build-base ncurses-dev autoconf automake git gettext-dev"
 ARG runtime_deps="tini ncurses libintl gettext musl-utils libmaxminddb libmaxminddb-dev "

@@ -3,7 +3,11 @@ version: "3.4"
 services:
   goaccess:
     container_name: goaccess
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ALPINE_VERSION: 3.10.2
     volumes:
       - ${PWD}/log/nginx:/var/log/nginx
       - ${PWD}/config/goaccess:/srv/data
